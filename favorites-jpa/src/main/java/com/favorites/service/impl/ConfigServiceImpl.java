@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 
-@Service("configService")
+@Service
 public class ConfigServiceImpl implements ConfigService {
 
     @Resource

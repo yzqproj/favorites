@@ -11,6 +11,7 @@ import com.favorites.service.LetterService;
 import com.favorites.service.NoticeService;
 import com.favorites.utils.DateUtils;
 import com.favorites.utils.StringUtil;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -25,14 +26,15 @@ import java.util.List;
  * Created by DingYS on 2017/3/8.
  */
 @Service
+@RequiredArgsConstructor
 public class LetterServiceImpl implements LetterService{
 
-    @Autowired
-    private LetterRepository letterRepository;
-    @Resource
-    private NoticeService noticeService;
-    @Autowired
-    private UserRepository userRepository;
+
+    private final LetterRepository letterRepository;
+
+    private final NoticeService noticeService;
+
+    private final UserRepository userRepository;
 
     /**
      * 发送私信
@@ -45,7 +47,7 @@ public class LetterServiceImpl implements LetterService{
         }else{
             letter.setType(LetterType.REPLY);
             List<String> usernameList = StringUtil.getAtUser(letter.getContent());
-            if(null != usernameList && usernameList.size() > 0){
+            if(usernameList.size() > 0){
                 User receiveUser = userRepository.findByUsername(usernameList.get(0));
                 if(null != receiveUser){
                     letter.setReceiveUserId(receiveUser.getId());

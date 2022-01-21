@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 public class StringUtil {
 
     public static List<String> getAtUser(String str) {
-        Pattern p = Pattern.compile("(?<=@).*?(?= )");
+         Pattern p = Pattern.compile("(?<=@).*?(?= )");
         Matcher m = p.matcher(str);
         List<String> result = new ArrayList<String>();
         while (m.find()) {

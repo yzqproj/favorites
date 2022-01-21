@@ -25,7 +25,7 @@ import java.util.List;
  * 随便看看ServiceImpl
  * Created by chenzhimin on 2017/1/4.
  */
-@Service("lookAroundService")
+@Service
 public class LookAroundServiceImpl implements LookAroundService{
 
     @Autowired

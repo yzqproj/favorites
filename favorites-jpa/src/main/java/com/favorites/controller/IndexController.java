@@ -100,7 +100,7 @@ public class IndexController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/lookAround")
+    @GetMapping(value = "/lookAround")
     @LoggerManage(description = "随便看看页面")
     public HashMap<String, Object> lookAroundStandard(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                       @RequestParam(value = "size", defaultValue = "15") Integer size) {
@@ -125,11 +125,11 @@ public class IndexController extends BaseController {
      *
      * @return /lookAround/simple/ALL
      */
-    @RequestMapping(value = "/lookAround/simple/{category}")
+    @GetMapping(value = "/lookAround/simple/{category}")
     @LoggerManage(description = "随便看看页面")
-    public String lookAroundSimple(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                   @RequestParam(value = "size", defaultValue = "20") Integer size,
-                                   @PathVariable("category") String category) {
+    public HashMap<String, Object> lookAroundSimple(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                    @RequestParam(value = "size", defaultValue = "20") Integer size,
+                                                    @PathVariable("category") String category) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -152,23 +152,11 @@ public class IndexController extends BaseController {
         hash.put("favorites", favorites);
         hash.put("userId", getUserId());
         hash.put("size", collects.size());
-        return "lookAround/simple";
+        return hash;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    @LoggerManage(description = "登陆页面")
-    public String login() {
 
-        return "login";
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    @LoggerManage(description = "注册页面")
-    public String regist() {
-        return "register";
-    }
-
-    @RequestMapping(value = "/tool")
+    @GetMapping(value = "/tool")
     @LoggerManage(description = "工具页面")
     public HashMap<String, Object> tool() {
         HashMap<String, Object> hash = new HashMap<>(16);
@@ -179,32 +167,16 @@ public class IndexController extends BaseController {
         return hash;
     }
 
-    @RequestMapping(value = "/mobile")
-    @LoggerManage(description = "移动客户端页面")
-    public String mobile() {
-        return "mobile";
-    }
 
-    @RequestMapping(value = "/import")
-    @LoggerManage(description = "收藏夹导入页面")
-    public String importm() {
-        return "favorites/import";
-    }
-
-    @RequestMapping(value = "/newFavorites")
-    @LoggerManage(description = "新建收藏夹页面")
-    public String newFavorites() {
-        return "favorites/newfavorites";
-    }
 
     @PostMapping(value = "/feedback")
     @LoggerManage(description = "意见反馈页面")
-    public String feedback() {
+    public HashMap<String, Object> feedback() {
         User user = null;
         user = userRepository.findById(getUserId());
         HashMap<String, Object> hash = new HashMap<>(16);
         hash.put("user", user);
-        return "favorites/feedback";
+        return hash;
     }
 
     @RequestMapping(value = "/collect", method = RequestMethod.GET)
@@ -223,7 +195,7 @@ public class IndexController extends BaseController {
 
     @PostMapping(value = "/logout")
     @LoggerManage(description = "登出")
-    public String logout(HttpServletResponse response) {
+    public HashMap<String, Object> logout(HttpServletResponse response) {
         getSession().removeAttribute(Const.LOGIN_SESSION_KEY);
         getSession().removeAttribute(Const.LAST_REFERER);
         Cookie cookie = new Cookie(Const.LOGIN_SESSION_KEY, "");
@@ -233,40 +205,9 @@ public class IndexController extends BaseController {
         IndexCollectorView indexCollectorView = collectorService.getCollectors();
         HashMap<String, Object> hash = new HashMap<>(16);
         hash.put("collector", indexCollectorView);
-        return "index";
+        return hash;
     }
 
-    @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
-    @LoggerManage(description = "忘记密码页面")
-    public String forgotPassword() {
-        return "user/forgotpassword";
-    }
-
-    @RequestMapping(value = "/newPassword", method = RequestMethod.GET)
-    public String newPassword(String email) {
-        return "user/newpassword";
-    }
-
-    @RequestMapping(value = "/uploadHeadPortrait")
-    @LoggerManage(description = "上传你头像页面")
-    public String uploadHeadPortrait() {
-        return "user/uploadheadportrait";
-    }
-
-    @PostMapping(value = "/export")
-    @LoggerManage(description = "收藏夹导出页面")
-    public String export() {
-        List<Favorites> favoritesList = favoritesRepository.findByUserId(getUserId());
-        HashMap<String, Object> hash = new HashMap<>(16);
-        hash.put("favoritesList", favoritesList);
-        return "favorites/export";
-    }
-
-    @RequestMapping(value = "/uploadBackground")
-    @LoggerManage(description = "上传背景页面")
-    public String uploadBackground() {
-        return "user/uploadbackground";
-    }
 
     /**
      * 首页收藏家个人首页
@@ -279,8 +220,8 @@ public class IndexController extends BaseController {
      */
     @GetMapping(value = "/collector/{userId}/{favoritesId:[0-9]*}")
     @LoggerManage(description = "首页收藏家个人首页")
-    public String collectorPageShow(@PathVariable("userId") long userId, @PathVariable("favoritesId") Long favoritesId, @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                    @RequestParam(value = "size", defaultValue = "15") Integer size) {
+    public HashMap<String, Object> collectorPageShow(@PathVariable("userId") long userId, @PathVariable("favoritesId") Long favoritesId, @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                     @RequestParam(value = "size", defaultValue = "15") Integer size) {
         User user = userRepository.findById(userId);
         Long collectCount = 0L;
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
@@ -327,7 +268,7 @@ public class IndexController extends BaseController {
         hash.put("loginUserInfo", getUser());
         hash.put("config", config);
         hash.put("configObj", config);
-        return "collector";
+        return hash;
     }
 
 }

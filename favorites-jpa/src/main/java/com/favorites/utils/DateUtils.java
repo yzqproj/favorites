@@ -2,25 +2,31 @@ package com.favorites.utils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateUtils {
-	
-    private final static long minute = 60 * 1000;// 1分钟
+    /**
+     * 1分钟
+     */
+    private final static long minute = 60 * 1000;
     private final static long hour = 60 * minute;// 1小时
     private final static long day = 24 * hour;// 1天
     private final static long month = 31 * day;// 月
     private final static long year = 12 * month;// 年
 	
 	public final static String YYYYMMDDHHMMSS = "yyyyMMddHHmmssSSS";
-	
+
     /**
-     * @return
+     * 得到时间序列
+     *
+     * @return {@link String}
      * @author neo
      * @date 2015-5-21
      */
     public static String getDateSequence() {
-        return new SimpleDateFormat(YYYYMMDDHHMMSS).format(new Date());
+        return DateTimeFormatter.ofPattern(YYYYMMDDHHMMSS).format(LocalDateTime.now());
     }
 
 

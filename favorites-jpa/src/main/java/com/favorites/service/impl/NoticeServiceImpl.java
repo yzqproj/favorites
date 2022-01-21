@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("noticeService")
+@Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 

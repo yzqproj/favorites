@@ -19,15 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CollectorServiceImpl implements CollectorService {
-    protected Logger logger =  LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final CollectorRepository collectorRepository;
     private final UserRepository userRepository;
 
 
-
     /**
      * 获取收藏家
+     *
      * @return
      */
     @Override
@@ -38,20 +38,20 @@ public class CollectorServiceImpl implements CollectorService {
             indexCollectorView.setMostCollectUser(userRepository.findById(mostCollectUser));
             long mostFollowedUser = collectorRepository.getMostFollowedUser(mostCollectUser);
             indexCollectorView.setMostFollowedUser(userRepository.findById(mostFollowedUser));
-            String notUserIds = mostCollectUser+","+mostFollowedUser;
+            String notUserIds = mostCollectUser + "," + mostFollowedUser;
             long mostPraisedUser = collectorRepository.getMostPraisedUser(notUserIds);
             indexCollectorView.setMostPraisedUser(userRepository.findById(mostPraisedUser));
-            notUserIds += ","+mostPraisedUser;
+            notUserIds += "," + mostPraisedUser;
             long mostCommentedUser = collectorRepository.getMostCommentedUser(notUserIds);
             indexCollectorView.setMostCommentedUser(userRepository.findById(mostCommentedUser));
-            notUserIds += ","+ mostCommentedUser;
+            notUserIds += "," + mostCommentedUser;
             long mostPopularUser = collectorRepository.getMostPopularUser(notUserIds);
             indexCollectorView.setMostPopularUser(userRepository.findById(mostPopularUser));
-            notUserIds += ","+ mostPopularUser;
+            notUserIds += "," + mostPopularUser;
             long mostActiveUser = collectorRepository.getMostActiveUser(notUserIds);
             indexCollectorView.setMostActiveUser(userRepository.findById(mostActiveUser));
-        }catch (Exception e){
-            logger.info("错误",e);
+        } catch (Exception e) {
+            logger.info("错误", e);
         }
         return indexCollectorView;
     }

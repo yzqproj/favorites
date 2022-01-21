@@ -36,7 +36,7 @@ import com.favorites.utils.DateUtils;
 import com.favorites.utils.HtmlUtil;
 import com.favorites.utils.StringUtil;
 
-@Service("collectService")
+@Service
 @RequiredArgsConstructor
 public class CollectServiceImpl extends CacheService implements CollectService {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());

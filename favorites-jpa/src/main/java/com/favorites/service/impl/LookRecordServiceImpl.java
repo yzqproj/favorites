@@ -10,6 +10,7 @@ import com.favorites.repository.PraiseRepository;
 import com.favorites.service.CollectService;
 import com.favorites.service.LookRecordService;
 import com.favorites.utils.DateUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,19 +24,20 @@ import java.util.List;
  * Created by louie on 2017/1/12.
  */
 @Service("lookRecordService")
+@RequiredArgsConstructor
 public class LookRecordServiceImpl implements LookRecordService {
 
-    @Autowired
-    private LookRecordRepository lookRecordRepository;
+    
+    private final LookRecordRepository lookRecordRepository;
 
-    @Autowired
-    private PraiseRepository praiseRepository;
+    
+    private final PraiseRepository praiseRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
+    
+    private final CommentRepository commentRepository;
 
-    @Autowired
-    private CollectService collectService;
+    
+    private final CollectService collectService;
 
 
 
