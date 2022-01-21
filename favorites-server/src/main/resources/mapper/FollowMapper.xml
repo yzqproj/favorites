@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.favorites.mapper.FollowMapper">
+
+    <select id="getFollowsByUserId" resultType="java.lang.String">
+        select u.username
+        from favorites.follow f,
+             favorites.user u
+        where f.user_id = :userId
+          and f.follow_id = u.id
+          and f.status = 'FOLLOW'
+    </select>
+</mapper>

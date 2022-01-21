@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.favorites.mapper.ConfigMapper">
+
+    <update id="updateCollectTypeById">
+        update favorites.config
+        set default_collect_type =#{value},
+            last_modify_time     =#{lastModifyTime}
+        where id = #{id}
+    </update>
+    <update id="updateModelTypeById">
+        update favorites.config
+        set default_model    =#{value},
+            last_modify_time =#{lastModifyTime}
+        where id = #{id}
+    </update>
+    <update id="updateFavoritesById">
+        update favorites.config
+        set default_favorties =#{value},
+            last_modify_time  =#{lastModifyTime}
+        where id = #{id}
+    </update>
+</mapper>

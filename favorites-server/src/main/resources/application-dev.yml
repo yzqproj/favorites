@@ -1,0 +1,23 @@
+
+logging:
+    level:
+        com:
+            favorites: INFO
+        org:
+            hibernate: INFO
+            springframework:
+                web: INFO
+    file:
+        name: /usr/local/logs/favorites-web.log
+
+
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: 123456
+        url: jdbc:mysql://127.0.0.1/favorites?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        Username: root
+
+    thymeleaf:
+        cache: false
+

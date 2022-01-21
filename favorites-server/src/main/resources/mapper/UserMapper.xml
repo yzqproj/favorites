@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.favorites.mapper.UserMapper">
+    <update id="setNewPassword">
+        update favorites.user
+        set password=#{pwd}
+        where email = #{email}
+    </update>
+    <update id="setIntroduction">
+        update favorites.user
+        set introduction=#{introduction}
+        where email = #{email}
+    </update>
+    <update id="setUsername">
+        update favorites.user
+        set username=#{username}
+        where email = #{email}
+    </update>
+    <update id="setProfilePicture" parameterType="string">
+        update favorites.user
+        set profile_picture=#{savePath}
+        where id = #{id}
+    </update>
+    <update id="setBackgroundPicture">
+        update favorites.user
+        set background_picture=#{savePath}
+        where id = #{id}
+    </update>
+
+    <select id="findByUsernameOrEmail" resultType="com.favorites.entity.User">
+        select *
+        from favorites.user
+        where username = #{username}
+           or email = #{email}
+    </select>
+    <select id="findByEmail" resultType="com.favorites.entity.User">
+        select *
+        from favorites.user
+        where email = #{email}
+    </select>
+    <select id="findByUsername" resultType="com.favorites.entity.User">
+        select *
+        from favorites.user
+        where username = #{username}
+    </select>
+</mapper>
