@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -23,6 +24,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class User extends Entitys implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@GeneratedValue(strategy= GenerationType.AUTO)

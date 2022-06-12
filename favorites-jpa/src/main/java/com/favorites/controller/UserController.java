@@ -1,5 +1,6 @@
 package com.favorites.controller;
 
+import cn.hutool.core.lang.Console;
 import com.favorites.comm.Const;
 import com.favorites.comm.aop.LoggerManage;
 import com.favorites.domain.Config;
@@ -18,6 +19,7 @@ import com.favorites.service.FavoritesService;
 import com.favorites.utils.FileUtil;
 import com.favorites.utils.MD5Util;
 import com.favorites.utils.MessageUtil;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
@@ -38,15 +40,19 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController extends BaseController {
-    @Autowired
-    private UserRepository userRepository;
-    @Resource
-    private ConfigService configService;
-    @Resource
-    private FavoritesService favoritesService;
-    @Resource
-    private JavaMailSender mailSender;
+    
+    private final UserRepository userRepository;
+    private final ConfigService configService;
+    private final FavoritesService favoritesService;
+    private final JavaMailSender mailSender;
+    
+    private final ConfigRepository configRepository;
+    
+    private final FollowRepository followRepository;
+    
+    private final FavoritesRepository favoritesRepository;
     @Value("${spring.mail.username}")
     private String mailFrom;
     @Value("${mail.subject.forgotpassword}")
@@ -61,12 +67,7 @@ public class UserController extends BaseController {
     private String fileProfilepicturesUrl;
     @Value("${file.backgroundpictures.url}")
     private String fileBackgroundpicturesUrl;
-    @Autowired
-    private ConfigRepository configRepository;
-    @Autowired
-    private FollowRepository followRepository;
-    @Autowired
-    private FavoritesRepository favoritesRepository;
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @LoggerManage(description = "登陆")
@@ -110,6 +111,7 @@ public class UserController extends BaseController {
     @LoggerManage(description = "注册")
     public Response create( @ParameterObject UserVo userVo) {
         try {
+            Console.log(userRepository.findByEmail(userVo.getEmail()));
             if (null != userRepository.findByEmail(userVo.getEmail())) {
                 return result(ExceptionMsg.EmailUsed);
             }
